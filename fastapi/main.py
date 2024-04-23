@@ -8,7 +8,7 @@ import requests
 def read_root():
     return {"Hello":"World"}
 
-base_url = 'http://localhost:5000/items'
+base_url = 'http://192.168.1.72:5000/items'
 @app.get(path='/items')
 def getItems():
     reponse = requests.get(base_url)
