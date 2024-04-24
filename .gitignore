@@ -6,3 +6,5 @@
 # openapi 사용해서 끌어온 json 파일 막는 용
 *.json
 
+#pycache
+/jsonserver/**/__pycache__/

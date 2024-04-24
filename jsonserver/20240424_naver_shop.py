@@ -58,4 +58,4 @@ filtered_json_data = {"items": filtered_items}
 with open('items.json', 'w', encoding='utf-8') as f:
     json.dump(filtered_json_data, f, ensure_ascii=False, indent=4)
 
-#subprocess.run(["./server.sh"], shell=True)
+subprocess.run(["./server.sh"], shell=True)
