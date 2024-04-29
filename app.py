@@ -4,6 +4,7 @@ from pymongo import mongo_client
 from database import Mysql_conn
 from models import *
 from lowlink import *
+from search_item import *
 import requests
 import os.path
 import json
@@ -35,6 +36,21 @@ base_url = 'http://0.0.0.0:5000/items'
         responses={200:{"description" : "jsonserver 응답"}}
 )
 async def getItemList():
+    reponse = requests.get(base_url)
+    return reponse.json()
+
+# item 입력받아서 jsonserver에 업로드
+@app.post(
+        path='/additemlist', description="검색 후 , jsonserver item 리스트 업로드",
+        status_code=status.HTTP_200_OK,
+        responses={200:{"description" : "jsonserver 응답"}}
+)
+# client_id, client_secret
+async def addItemList(query: Optional[str] = None):
+    client_id = get_secret("client_id")
+    client_secret = get_secret("client_secret")
+    get_search_item(client_id, client_secret, query)
+    time.sleep(2)
     reponse = requests.get(base_url)
     return reponse.json()
 

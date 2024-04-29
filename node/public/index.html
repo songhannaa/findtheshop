@@ -14,7 +14,6 @@
                 <ul>
                     <li><a href="#">HOME</a></li>
                     <li><a href="#">Product</a></li>
-                    <li><a href="/fastapitest">test</a></li>
                 </ul>
             </div>
         </nav>
@@ -23,9 +22,9 @@
         <div class="section1">
             <div class="title">#FINDTHESHOP</div>
             <div class="search">
-                <form action="" method="post" name="" id="form">
-                    <input type="text" name="product" size="10" id="product" placeholder="상품을 검색하세요..">
-                    <button type="submit" id="submit">search
+                <form action="itemlist" method="post" target="targetURL" name="itemForm">
+                    <input type="text" name="query" size="10" id="product" placeholder="상품을 검색하세요..">
+                    <button type="submit" value="/itemlist">search
                     </button>
                 </form>
             </div>
