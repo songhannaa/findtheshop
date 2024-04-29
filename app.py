@@ -1,11 +1,9 @@
 from fastapi import FastAPI, status
-from fastapi.responses import PlainTextResponse, JSONResponse
-from pydantic import BaseModel, Field
 from typing import Optional
 from pymongo import mongo_client
 from database import Mysql_conn
-from models import Itemtest
-from lowlink import get_lowest_price_link
+from models import *
+from lowlink import *
 import requests
 import os.path
 import json
@@ -30,7 +28,7 @@ def get_secret(setting, secrets=secrets):
         return errorMsg
  
 # jsonserver - itemlist (정제 필요함)
-base_url = 'http://192.168.1.72:5000/items'
+base_url = 'http://0.0.0.0:5000/items'
 @app.get(
         path='/itemlist', description="jsonserver item 리스트",
         status_code=status.HTTP_200_OK,
@@ -113,22 +111,21 @@ client = mongo_client.MongoClient(f'mongodb://{MONGOUSERNAME}:{MONGOPASSWORD}@{M
 mydb = client['findtheshop']
 mycol = mydb['lowlink']
 
-# 몽고에 담은 내용 보기
-@app.get('/getmongolowlink')
-async def getMongoLowlink():
+# 상품 선택했을 때, productid와 title받아서 셀레니움으로 크롤링 가동하고 > 긁어온 링크를 몽고에 저장 > 그걸또 바로보여줌 가능??? 응가능
+@app.post('/addlowlink/{productId}')
+async def addLowLink(productId: Optional[str] = None):
+    url=f"https://search.shopping.naver.com/catalog/{productId}?&section=price"
+    lowitem = get_lowest_price(url, productId)
+    mycol.insert_many(lowitem)
     data = list(mycol.find({}, {"_id":0}).limit(100))
+    # mysql에 productId만 insert (나중에 select, drop을 위해)
+    item = Lowlink(productID=productId)
+    session.add(item)
+    session.commit()
     return(data)
 
-# 상품 선택했을 때, productid와 title받아서 셀레니움으로 크롤링 가동하고 > 긁어온 링크를 몽고에 저장 > 그걸또 바로보여줌 가능?
-@app.post('/addLowLink/{productId}')
-async def addLowLink(productId: Optional[str] = None):
-    url = base_url + '?' + 'productId=' + productId
-    response = requests.get(url)
-    product_data = response.json()  
-    selected_data = {
-        'title': product_data[0]['title'],
-        'productId': product_data[0]['productId']
-    }
-    url=f"https://search.shopping.naver.com/catalog/{selected_data['productId']}?frm=undefined&query={selected_data['title']}&section=price"
-    result = get_lowest_price_link(url)
-    return result
+# 몽고에 담은 내용  확인하기
+@app.get('/getlowlink/{productId}')
+async def getLowlink(productId: Optional[str] = None):
+    result = list(mycol.find({"productId":productId}, {"_id":0}))
+    return(result)

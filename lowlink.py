@@ -1,57 +1,63 @@
 from selenium import webdriver
-from selenium.webdriver.support import expected_conditions as EC
 from pyvirtualdisplay import Display 
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
+import time
+from bs4 import BeautifulSoup
 
-# for Linux : Linux 환경에서 selenium 실행 시 필요한 옵션
-display = Display(visible=0, size=(1920, 1080))
-display.start()
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--no-sandbox')
-driver = webdriver.Chrome(options=chrome_options)
-###  
 
-def get_lowest_price_link(url):
-    try:
+def get_lowest_price(url, productId):
+    try: 
+        # for Linux : Linux 환경에서 selenium 실행 시 필요한 옵션
+        display = Display(visible=0, size=(1920, 1080))
+        display.start()
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--no-sandbox')
+        driver = webdriver.Chrome(options=chrome_options)
         driver.get(url)
-        # 최저가 링크 3개와 샵 명, 현재 최저가격 가져오기
-        lowest_price_links = []
-        lowest_price_shops = []
-        lowest_prices = []
-        #lowest_deliverys = []
-
+        time.sleep(5)
+        soup = BeautifulSoup(driver.page_source, 'html.parser')
+        output = []
         for i in range(1, 4):
-            # 최저가 링크
-            lowest_price_link = WebDriverWait(driver, 10).until(
-                EC.visibility_of_element_located((By.XPATH, f'//*[@id="section_price"]/div[4]/ul/li[{i}]/div/div[2]/a'))
-            ).get_attribute('href')
-            lowest_price_links.append(lowest_price_link)
+            # 최저가 리스트 링크
+            link_selector = f"#section_price > div.productList_seller_wrap__FZtUS > >ul  li:nth-child({i}) > div > div.productList_price__2eGt4 > a"
+            lowlink_list_link = soup.select_one(link_selector)
+            # 최저가 리스트 가격
+            price_selector = f"#section_price > div.productList_seller_wrap__FZtUS > ul > li:nth-child({i}) > div > div.productList_price__2eGt4 > a > span > em"
+            lowlink_list_price = soup.select_one(price_selector)
+            # 최저가 리스트 배송비
+            delivery_selector = f"#section_price > div.productList_seller_wrap__FZtUS > ul > li:nth-child({i}) > div > div.productList_price__2eGt4 > div.productList_delivery__WwSwL"
+            lowlink_list_delivery = soup.select_one(delivery_selector)
 
-            # # 최저가 샵 명
-            # lowest_price_shop = WebDriverWait(driver, 10).until(
-            #     EC.visibility_of_element_located((By.XPATH, f'//*[@id="section_price"]/div[4]/ul/li[{i}]/div/div[1]/a/img'))
-            # ).get_attribute('alt')
-            # lowest_price_shops.append(lowest_price_shop)
-
-            # # 현재 최저가격
-            # lowest_price = WebDriverWait(driver, 10).until(
-            #     EC.visibility_of_element_located((By.XPATH, f'//*[@id="section_price"]/div[4]/ul/li[{i}]/div/div[3]/a/span/em'))
-            # ).text
-            # lowest_prices.append(lowest_price)
-
-            # # 현재 배송비
-            # lowest_delivery = WebDriverWait(driver, 10).until(
-            #     EC.visibility_of_element_located((By.XPATH, f'//*[@id="section_price"]/div[4]/ul/li[1]/div/div[3]/div[1]/div/text()'))
-            # )
-            # lowest_deliverys.append(lowest_delivery)
-
-        return lowest_price_links, lowest_price_shops, lowest_prices
-
-
+            if lowlink_list_link:
+                lowlinks_href = lowlink_list_link.attrs['href']
+                lowlinks_price = lowlink_list_price.get_text().strip().replace(",", "")
+                lowlinks_delivery = lowlink_list_delivery.get_text().strip().replace("배송비", "").replace("원", "").replace("포함", "").replace(",", "")
+       
+                # 최저가 리스트 판매처 이름
+                shop_selector_img = f"#section_price > div.productList_seller_wrap__FZtUS > ul > li:nth-child({i}) > div > div.productList_mall__JtWmC > a > img"
+                lowlink_list_shop_img = soup.select_one(shop_selector_img)
+                
+                shop_selector_text = f"#section_price > div.productList_seller_wrap__FZtUS > ul > li:nth-child({i}) > div > div.productList_mall__JtWmC > a > span"
+                lowlink_list_shop_text = soup.select_one(shop_selector_text)
+                
+                if lowlink_list_shop_img:
+                    lowlinks_shop = lowlink_list_shop_img.attrs['alt']
+                elif lowlink_list_shop_text:
+                    lowlinks_shop = lowlink_list_shop_text.get_text().strip()
+                else:
+                    continue               
+                
+                data = {
+                    "productId": productId,
+                    "link": lowlinks_href,
+                    "shop": lowlinks_shop,
+                    "price": lowlinks_price,
+                    "deliveryfee": lowlinks_delivery
+                }
+                output.append(data)
+        
+        driver.quit()
+        return output
+    
     except Exception as e:
         print(f"Failed to get lowest price link for URL {url}: {e}")
         return None
-    
-if __name__ == "__main__":
-    get_lowest_price_link()

@@ -13,3 +13,8 @@ class Itemtest(Base):
     lprice = Column(INT, nullable=False)
     productId = Column(INT, nullable=False)
 
+class Lowlink(Base):
+    __tablename__ = 'lowlink'
+
+    id = Column(INT, primary_key=True, index=True)
+    productID = Column(INT, nullable=False)
