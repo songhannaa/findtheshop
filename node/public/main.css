@@ -45,12 +45,17 @@ nav{
     text-align: center;
 }
 
+
 #product{
     width: 500px;
     border: none;
     background-color: #f0f0f0;
     padding: 10px 20px;
     border-radius: 25px;
+}
+
+#product:focus{
+    outline: none;
 }
 
 #submit{
@@ -64,7 +69,6 @@ nav{
 
 #submit:hover{
     background-color: rgb(98, 96, 226);
-    color: rgb(0, 0, 0);
 }
 
 /* section1 */

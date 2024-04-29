@@ -128,6 +128,7 @@ mydb = client['findtheshop']
 mycol = mydb['lowlink']
 
 # 상품 선택했을 때, productid와 title받아서 셀레니움으로 크롤링 가동하고 > 긁어온 링크를 몽고에 저장 > 그걸또 바로보여줌 가능??? 응가능
+# mongodb에 먼저 확인하는 작업 필요함
 @app.post('/addlowlink/{productId}')
 async def addLowLink(productId: Optional[str] = None):
     url=f"https://search.shopping.naver.com/catalog/{productId}?&section=price"
