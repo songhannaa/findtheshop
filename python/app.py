@@ -13,7 +13,7 @@ db = Mysql_conn()
 session = db.sessionmaker()
 
 # jsonserver url
-base_url = 'http://0.0.0.0:5000/items'
+base_url = 'http://192.168.1.72:5000/items'
 
 @app.get(
         path='/itemlist', description="jsonserver item 리스트",
@@ -67,9 +67,9 @@ async def addItem(productId: Optional[str] = None):
             session.add(item)
             session.commit()
             result = session.query(Item).filter(Item.productId == productId).first()
-            return result
+            return {"item": result}
         else:
-            return checkId
+            return {"item": checkId }
     
 # 담은 item table 전체 조회 (최근 본 상품)
 @app.get(
@@ -78,8 +78,8 @@ async def addItem(productId: Optional[str] = None):
         responses={200:{"description" : "mysql 조회 완료"}}
 )
 async def getItems():
-    result = session.query(Item)
-    return result.all()
+    result = session.query(Item).all()
+    return {"item":result}
 
 # 담은 item table 중 선택해서 출력 (확인용)
 @app.get(
@@ -92,7 +92,7 @@ async def getItem(productId: Optional[str] = None):
         return "productId를 입력하세요."
     else:
         result = session.query(Item).filter(Item.productId == productId).first()
-        return result
+        return {"item":result}
 
 # item table에서 삭제할 productId 입력  후, 삭제
 @app.get(
@@ -107,7 +107,7 @@ async def deleteItem(productId: Optional[str] = None):
         session.query(Item).filter(Item.productId == productId).delete()
         session.commit()
         result = session.query(Item).all()
-        return result
+        return {"item":result}
 
 # 상품 선택했을 때, 크롤링 한 정보를 몽고에 저장 (중복 확인하고 존재하면 몽고 에서 꺼내오기 )
 @app.post(
@@ -129,10 +129,10 @@ async def addLowLink(productId: Optional[str] = None):
         lowitem = get_lowest_price(url, productId)
         mycol.insert_many(lowitem)
         result = list(mycol.find({"productId":productId}, {"_id":0}))
-        return(result)
+        return {"lowlinklist":result}
     # 존재하면 저장 했던 값 출력하기
     else:
-        return(checkId)
+        return {"lowlinklist":checkId}
 
 @app.get(
     path='/getlowlink/{productId}',description="상품 최저가 정보 mongoDB 조회",
@@ -141,6 +141,6 @@ async def addLowLink(productId: Optional[str] = None):
 )
 async def getLowlink(productId: Optional[str] = None):
     result = list(mycol.find({"productId":productId}, {"_id":0}))
-    return(result)
+    return {"lowlinklist":result}
 
 # 최근 본 상품에서 삭제 했을 때, productId값으로 몽고에서 조회 후 , 삭제

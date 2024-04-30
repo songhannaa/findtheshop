@@ -14,15 +14,13 @@ app.get('/view', async (req, res) => {
     try {
         const response = await fetch('http://192.168.1.72:3000/getitems');
         const data = await response.json();
-
-        // 최근 순으로 정렬 후 처음 4개의 항목만 선택
-        const recentItems = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)).slice(0, 4);
-
+        const recentItems = data.item
         let output = '<link rel="stylesheet" href="/main.css"><link rel="stylesheet" href="/reset.css">';
         output += `
                 <h2 style="margin:30px 0">최근 본 상품</h2>
                     <ul class="item-list">
         `;
+
         recentItems.forEach((item) => {
             output += `
                 <li class="item">
@@ -49,6 +47,7 @@ app.get('/views', async (req, res) => { // req 매개변수 추가
     try {
         const response = await fetch('http://192.168.1.72:3000/getitems');
         const data = await response.json();
+        const recentItems = data.item
         let output = `  
                         <!DOCTYPE html>
                         <html>
@@ -71,9 +70,10 @@ app.get('/views', async (req, res) => { // req 매개변수 추가
                             </nav>
                             <h2 style="text-align:center; margin:30px 0">최근 본 상품 리스트</h2>
                         </div>
+                        <div id="wrap">
                         <ul class="item-list">
                     `;
-        data.forEach((item) => {
+        recentItems.forEach((item) => {
             output += `
                 <li class="item">
                     <a href="/iteminfo?productId=${item.productId}" target="_blank">
@@ -86,6 +86,7 @@ app.get('/views', async (req, res) => { // req 매개변수 추가
         });
         output += `
                     </ul>
+                    </div>
                     </body>
                     </html>
         `;
@@ -133,7 +134,7 @@ app.post('/itemlist', async (req, res) => {
                             </nav>
                             <h2 style="text-align:center; margin:30px 0">" ${req.body.query} "검색 결과입니다</h2>
                         </div>
-                        
+                        <div id="wrap">
                         <ul class="item-list">
                             
                     `;
@@ -150,6 +151,7 @@ app.post('/itemlist', async (req, res) => {
                     });
                     output += `
                                 </ul>
+                                </div>
                                 </body>
                                 </html>
                     `;
@@ -178,7 +180,8 @@ app.get('/iteminfo', async (req, res) => {
             },
             body: JSON.stringify(data)
         });
-        const itemData = await itemResponse.json();
+        const responseItemData = await itemResponse.json();
+        const itemList = responseItemData.item;
 
         const linkResponse = await fetch(`http://192.168.1.72:3000/addlowlink/${productId}`, {
             method: 'POST',
@@ -187,44 +190,66 @@ app.get('/iteminfo', async (req, res) => {
             },
             body: JSON.stringify(data)
         });
-        const linkData = await linkResponse.json();
+        const responseLinkData = await linkResponse.json();
+        const lowlinklist = responseLinkData.lowlinklist;
 
-        // 상품 정보 추가
+        // 상품 정보와 최저가 정보를 HTML에 추가
         let output = `
-                        <!DOCTYPE html>
-                        <html>
-                        <head>
-                            <meta charset="UTF-8">
-                            <title>FINDTHESHOP-상품 상세 페이지</title>
-                            <link rel="stylesheet" href="/main.css">
-                            <link rel="stylesheet" href="/reset.css">
-                        </head>
-                        <body>
-                        <div id="wrap">
-                            <nav>
-                                <div class="logo"><a href="/">#FINDTHESHOP</a></div>
-                                <div class="navbar">
-                                    <ul>
-                                        <li><a href="/">HOME</a></li>
-                                        <li><a href="views" target="_self">Product</a></li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>`
+            <!DOCTYPE html>
+            <html lang="ko">
+            <head>
+                <meta charset="UTF-8">
+                <title>FINDTHESHOP-상품 상세 페이지</title>
+                <link rel="stylesheet" href="/main.css">
+                <link rel="stylesheet" href="/reset.css">
+            </head>
+            <body>
+                <div id="wrap">
+                    <nav>
+                        <div class="logo"><a href="/">#FINDTHESHOP</a></div>
+                        <div class="navbar">
+                            <ul>
+                                <li><a href="/">HOME</a></li>
+                                <li><a href="views" target="_self">Product</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+                <div id="wrap">
+                    <div class="iteminfo">
+                        <div class="img">
+                            <img src="${itemList.image}" alt="${itemList.title}">
+                        </div>
+                        <div class="info">
+                            <h3>${itemList.title}</h3>
+                            <p>판매처 별 최저가</p>
+                            <hr>
+                            <ul>
+        `;
         
-        output += `<h1>${itemData.title}</h1>`;
-        output += `<img src="${itemData.image}" alt="Product Image">`;
-
-        // 최저가 정보 추가
-        linkData.forEach((item) => {
-            output += `<div><a href="${item.link}" target="_blank">최저가 링크 : ${item.link} </a>`; 
-            output += `<p>판매처: ${item.shop || "N/A"}</p>`;
-            output += `<p>최저가: ${item.price || "N/A"}</p>`;
-            output += '</div>';
+        lowlinklist.forEach(item => {
+            output += `
+                <li>
+                    <a href="${item.link}" alt="최저가링크" target="_blank">
+                        <div class="bestlowlink"></div>
+                        <div class="shop">${item.shop}</div>
+                        <div class="price">${item.price}원</div>
+                        <div class="delivery">배송비 ${item.deliveryfee}</div>
+                    </a>
+                </li>
+            `;
         });
         output += `
-                    </body>
-                    </html>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <iframe class="iframe-preview center" width="100%" height="2000" style="border: none;" src="/reviews?productId=${itemList.productId}" frameborder='0' scrolling="no">
+                </iframe>
+
+            </body>
+            </html>
         `;
         res.send(output);
     } catch (error) {
@@ -232,5 +257,38 @@ app.get('/iteminfo', async (req, res) => {
         res.status(500).send('Internal Server Error');
     }
 });
+
+app.get('/reviews', async (req, res) => {
+    try {
+        const productId = req.query.productId;
+        const reviewResponse = await fetch(`http://192.168.1.162:3500/reviews/${productId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const responseReviewData = await reviewResponse.json();
+        const reviewList = responseReviewData.reviews;
+        let output = `
+                <link rel="stylesheet" href="/main.css">
+                <link rel="stylesheet" href="/reset.css">
+                `
+        reviewList.forEach(item => {
+            output += `
+                <li>
+                    <p>${item.productId}</p>
+                    <p>${item.contents}</p>
+                    <p>${item.date}</p>
+                    <p>${item.rank}</p>
+                </li>
+            `;
+        });
+        res.send(output);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
 
 module.exports = app;

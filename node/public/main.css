@@ -1,7 +1,7 @@
 @charset 'utf-8';
 
 #wrap {
-    width: 90%;
+    width: 70%;
     margin: 0 auto;
 }
 
@@ -15,9 +15,10 @@ nav{
 
 .logo{
     width: 20%;
-    margin: 18px 0 0 50px;
+    margin: 13px 0 0 40px;
     font-weight: 900;
     color: black;
+    font-size: 20px;
 }
 
 .logo a:hover{
@@ -81,62 +82,14 @@ nav{
     background-color: rgb(98, 96, 226);
 }
 
-/* section1 */
-
-.section2{
-    box-sizing: border-box;
-}
-
 .itemtitle h3{
     margin-bottom: 20px;
 }
 
-.productList{
-    display: flex;
-    justify-content: center;
-}
-
-.productList ul{
-    display: flex;
-}
-
-.productList ul li{
-    border: 1px solid #eee;
-    border-radius: 15px;
-    padding: 5px;
-    margin-right: 50px;
-    width: 250px;
-}
-.productList ul li:nth-child(4){
-    margin-right: 0px;
-}
-
-.image img{
-    width: 250px;
-    height: 220px;
-    border-radius: 10px;
-    padding: 5px;
-    transition: all 0.2s linear;
-}
-
-.image:hover img{
-    transform: scale(1.1);
-}
-
-.itemtitle{
-    font-weight: bold;
-    padding: 3px 5px;
-}
-
-.lprice{
-    padding: 5px 5px;
-}
-
 .item-list {
-    width:90%;
+    width:100%;
     list-style: none;
     padding: 0;
-    margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -173,5 +126,61 @@ nav{
 
 .item p {
     font-size: 14px;
+    color: #777;
+}
+
+/* 상품 상세  페이지 */
+.iteminfo{
+    display: flex;
+    margin: 50px 0 100px 0;
+    
+}
+.img{
+    text-align: center;
+    width: 40%;
+    margin-right: 70px;
+}
+
+.img img {
+    max-width: 85%;
+    height: auto;
+}
+
+.info{
+    padding: 50px 0 50px 50px;
+    width: 50%;
+}
+
+.info h3{
+    font-size: 30px;
+    margin-bottom: 80px;
+}
+
+.info p{
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.info ul{
+    padding: 0;
+    margin-top: 20px;
+}
+.info ul li a{
+    display: flex;
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.info ul li a div{
+    width: 25%;
+}
+
+.info ul li:first-child .bestlowlink::after{
+    content: "현재 최저가!!";
+    color: rgb(255, 151, 113);   
+    font-weight: bold;
+}
+
+.info .delivery{
     color: #777;
 }
