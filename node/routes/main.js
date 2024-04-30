@@ -15,20 +15,22 @@ app.get('/view', async (req, res) => {
         const response = await fetch('http://192.168.1.72:3000/getitems');
         const data = await response.json();
         const recentItems = data.item
+
+        const sortedItems = recentItems.sort((a, b) => b.id - a.id).slice(0, 4);
         let output = '<link rel="stylesheet" href="/main.css"><link rel="stylesheet" href="/reset.css">';
         output += `
                 <h2 style="margin:30px 0">최근 본 상품</h2>
                     <ul class="item-list">
         `;
 
-        recentItems.forEach((item) => {
+        sortedItems.forEach((item) => {
             output += `
                 <li class="item">
                     <a href="/iteminfo?productId=${item.productId}" target="_blank">
                         <img src="${item.image}" alt="${item.title}">
                     </a>
                     <h4>${item.title}</h4>
-                    <p>${item.lprice}원</p>
+                    <p>현재 최저가 <strong style="color:#f56565">${item.lprice}</strong> 원</p>
                 </li>
             `;
         });
@@ -68,7 +70,7 @@ app.get('/views', async (req, res) => { // req 매개변수 추가
                                     </ul>
                                 </div>
                             </nav>
-                            <h2 style="text-align:center; margin:30px 0">최근 본 상품 리스트</h2>
+                            <h2 style="text-align:center; margin:30px 0">최근 본 상품 전체 리스트</h2>
                         </div>
                         <div id="wrap">
                         <ul class="item-list">
@@ -80,15 +82,37 @@ app.get('/views', async (req, res) => { // req 매개변수 추가
                         <img src="${item.image}" alt="Product Image">
                     </a>
                     <h4>${item.title}</h4>
-                    <p>${item.lprice}원</p>
+                    <p>현재 최저가 <strong style="color:#f56565">${item.lprice}</strong> 원</p>
+                    <div class="delete-btn" data-product-id="${item.productId}">삭제</div>
                 </li>
             `;
         });
         output += `
-                    </ul>
-                    </div>
-                    </body>
-                    </html>
+                </ul>
+                </div>
+                <script>
+                    // 삭제 버튼 클릭 시 처리
+                    document.querySelectorAll('.delete-btn').forEach(btn => {
+                        btn.addEventListener('click', async () => {
+                            const productId = btn.dataset.productId;
+                            try {
+                                const response = await fetch('http://192.168.1.72:3000/deleteitem/' + productId, {
+                                    method: 'POST'
+                                });
+                                if (response.ok) {
+                                    const listItem = document.getElementById('productId');
+                                    listItem.parentNode.removeChild(listItem);
+                                } else {
+                                    console.error('삭제 실패');
+                                }
+                            } catch (error) {
+                                console.error(error);
+                            }
+                        });
+                    });
+                </script>
+            </body>
+            </html>
         `;
         res.send(output);
     } catch (error) {
@@ -132,7 +156,7 @@ app.post('/itemlist', async (req, res) => {
                                     </ul>
                                 </div>
                             </nav>
-                            <h2 style="text-align:center; margin:30px 0">" ${req.body.query} "검색 결과입니다</h2>
+                            <h2 style="text-align:center; margin:30px 0">" ${req.body.query} " 검색 결과입니다</h2>
                         </div>
                         <div id="wrap">
                         <ul class="item-list">
@@ -145,7 +169,7 @@ app.post('/itemlist', async (req, res) => {
                                     <img src="${item.image}" alt="Product Image">
                                 </a>
                                 <h4>${item.title}</h4>
-                                <p>${item.lprice}원</p>
+                                <p>현재 최저가 <strong style="color:#f56565">${item.lprice}</strong> 원</p>
                             </li>
                         `;
                     });
@@ -168,6 +192,7 @@ app.post('/itemlist', async (req, res) => {
     }
 });
 
+// 상품 상세 정보 눌렀을 때, mysql mongodb 담기
 app.get('/iteminfo', async (req, res) => {
     try {
         const productId = req.query.productId;
@@ -245,12 +270,12 @@ app.get('/iteminfo', async (req, res) => {
                     </div>
                 </div>
 
-                <iframe class="iframe-preview center" width="100%" height="2000" style="border: none;" src="/reviews?productId=${itemList.productId}" frameborder='0' scrolling="no">
-                </iframe>
+                
 
             </body>
             </html>
         `;
+        //<iframe class="iframe-preview center" width="100%" height="2000" style="border: none;" src="/reviews?productId=${itemList.productId}" frameborder='0' scrolling="no"></iframe>
         res.send(output);
     } catch (error) {
         console.error(error);
@@ -258,6 +283,7 @@ app.get('/iteminfo', async (req, res) => {
     }
 });
 
+// 리뷰
 app.get('/reviews', async (req, res) => {
     try {
         const productId = req.query.productId;

@@ -17,12 +17,13 @@ nav{
     width: 20%;
     margin: 13px 0 0 40px;
     font-weight: 900;
-    color: black;
+    color: rgb(142, 153, 255);
     font-size: 20px;
 }
 
 .logo a:hover{
-    color: rgb(142, 153, 255);
+    color: rgb(98, 96, 226);
+    
 }
 .navbar ul li a:hover{
     color: rgb(138, 187, 255);
@@ -96,7 +97,7 @@ nav{
 }
 
 .item {
-    width: calc(25% - 100px); 
+    width: calc(25% - 60px); 
     margin: 25px;
     padding: 15px;
     border: 1px solid #ddd;
@@ -118,15 +119,28 @@ nav{
     transform: scale(1.1);
 }
 
-.item h3 {
-    margin-top: 10px;
-    margin-bottom: 5px;
-    font-weight: 400;
+.item h4 {
+    height: 50px;
+    font-weight: 500;
 }
 
 .item p {
     font-size: 14px;
-    color: #777;
+    color: rgb(142, 153, 255);
+    margin-top: 0px;
+}
+
+.delete-btn {
+    cursor: pointer;
+    background-color: #f56565;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 50px;
+    margin-top: 15px;
+    float: right;
+    
 }
 
 /* 상품 상세  페이지 */

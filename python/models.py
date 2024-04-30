@@ -7,7 +7,8 @@ Base = declarative_base()
 class Item(Base):
     __tablename__ = 'item'
 
-    productId = Column(INT,primary_key=True, nullable=False)
+    id = Column(INT,primary_key=True, nullable=False)
+    productId = Column(INT, nullable=False)
     title = Column(TEXT, nullable=False)
     link = Column(TEXT, nullable=False)
     image = Column(TEXT, nullable=False)

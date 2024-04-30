@@ -94,8 +94,8 @@ async def getItem(productId: Optional[str] = None):
         result = session.query(Item).filter(Item.productId == productId).first()
         return {"item":result}
 
-# item table에서 삭제할 productId 입력  후, 삭제
-@app.get(
+# 최근 본 상품에서 삭제 했을 때, productId값으로 mysql, mongodb에서 삭제
+@app.post(
         path='/deleteitem/{productId}',description="mysql item table 선택 삭제",
         status_code=status.HTTP_200_OK,
         responses={200:{"description" : "mysql 선택 삭제 완료"}}
@@ -104,8 +104,12 @@ async def deleteItem(productId: Optional[str] = None):
     if productId is None:
         return "productId를 입력해주세요"
     else:
+        # mysql delete
         session.query(Item).filter(Item.productId == productId).delete()
         session.commit()
+        # mongodb delete
+        mycol.delete_one({"productId":productId})
+
         result = session.query(Item).all()
         return {"item":result}
 
@@ -143,4 +147,4 @@ async def getLowlink(productId: Optional[str] = None):
     result = list(mycol.find({"productId":productId}, {"_id":0}))
     return {"lowlinklist":result}
 
-# 최근 본 상품에서 삭제 했을 때, productId값으로 몽고에서 조회 후 , 삭제
+
