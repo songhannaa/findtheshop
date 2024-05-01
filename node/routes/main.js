@@ -410,7 +410,7 @@ app.get('/iteminfo', async (req, res) => {
                 </div>
                 <div id="wrap">
                 <h2 style="margin-bottom:50px">상품 리뷰</h2>
-                <iframe class="iframe-preview center" width="100%" height="2000" style="border: none;" src="/reviews?productId=${itemList.productId}" frameborder='0' scrolling="no"></iframe>
+                <iframe class="iframe-preview center" width="100%" height="2500px" style="border: none;" src="/reviews?productId=${itemList.productId}" frameborder='0' scrolling="no"></iframe>
                 </div>
             </body>
             </html>
@@ -441,8 +441,8 @@ app.get('/reviews', async (req, res) => {
                 `
         reviewList.forEach(item => {
             output += `
-                <li class="review-list">
-                    <div class="rank">⭐ ${item.rank} &nbsp;|&nbsp;<span>${item.date}</span></div>
+                <li class="review-list" style="padding:30px 30px">
+                    <div class="rank" style="font-weight:bold; font-size:20px; margin-bottom:10px">⭐ ${item.rank} &nbsp;<span style="font-weight:500; font-size:17px">|&nbsp;${item.date}</span></div>
                     <div class="contents">${item.contents}</div>
                 </li>
             `;

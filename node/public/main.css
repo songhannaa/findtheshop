@@ -203,7 +203,7 @@ nav{
 /* 상품 상세  페이지 */
 .iteminfo{
     display: flex;
-    margin: 50px 0 50px 0;
+    margin: 20px 0 5px 0;
     
 }
 .img{
@@ -223,7 +223,7 @@ nav{
 }
 
 .info h3{
-    font-size: 35px;
+    font-size: 25px;
     margin-bottom: 80px;
 }
 
@@ -238,8 +238,8 @@ nav{
 }
 .info ul li a{
     display: flex;
-    font-size: 20px;
-    margin-bottom: 30px;
+    font-size: 18px;
+    margin-bottom: 20px;
 }
 
 .info ul li a div{
