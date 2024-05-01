@@ -16,7 +16,7 @@ def get_lowest_price(url, productId):
         time.sleep(1)
         soup = BeautifulSoup(driver.page_source, 'html.parser')
         result = []
-        for i in range(1, 4):
+        for i in range(1, 6):
             # 최저가 리스트 링크
             link_selector = f"#section_price > div.productList_seller_wrap__FZtUS > ul  li:nth-child({i}) > div > div.productList_price__2eGt4 > a"
             lowlink_list_link = soup.select_one(link_selector)
