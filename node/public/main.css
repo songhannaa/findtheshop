@@ -1,4 +1,10 @@
 @charset 'utf-8';
+@font-face {
+    font-family: 'TTHakgyoansimGureumR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2402_keris@1.0/TTHakgyoansimGureumR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
 
 #wrap {
     width: 70%;
@@ -14,9 +20,10 @@ nav{
 }
 
 .logo{
+    font-family: 'TTHakgyoansimGureumR';
     width: 20%;
-    margin: 13px 0 0 40px;
-    font-weight: 900;
+    margin: 15px 0 0 40px;
+    font-weight: 700;
     color: rgb(142, 153, 255);
     font-size: 20px;
 }
@@ -49,8 +56,9 @@ nav{
 .title{
     text-align: center;
     font-size: 50px;
-    font-weight: 500;
+    font-weight: 400;
     margin-bottom: 80px;
+    font-family: 'TTHakgyoansimGureumR';
 }
 
 .search{

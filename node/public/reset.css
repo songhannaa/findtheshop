@@ -1,9 +1,9 @@
 @charset 'utf-8';
 
 @font-face {
-  font-family: 'Pretendard-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
+  font-family: 'KCC-Hanbit';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2403-2@1.0/KCC-Hanbit.woff2') format('woff2');
+  font-weight: normal;
   font-style: normal;
 }
 
@@ -32,7 +32,8 @@ blockquote,
 dl,
 dd {
   margin-block-end: 0;
-  font-family: 'Pretendard-Regular';
+  font-family: 'KCC-Hanbit';
+  font-weight: 200;
   color: #252525;
 }
 
