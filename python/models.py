@@ -1,22 +1,21 @@
-from sqlalchemy import Column, TEXT, INT
+from sqlalchemy import Column, TEXT, INT, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-# SQL TABLE
+# SQL TABLE - Item
 class Item(Base):
     __tablename__ = 'item'
 
-    id = Column(INT,primary_key=True, nullable=False)
-    productId = Column(INT, nullable=False)
+    id = Column(INT, primary_key=True, nullable=False)
+    productId = Column(BigInteger, nullable=False)
     title = Column(TEXT, nullable=False)
     link = Column(TEXT, nullable=False)
     image = Column(TEXT, nullable=False)
     lprice = Column(INT, nullable=False)
     
-
+# SQL TABLE - Lowlink
 class Lowlink(Base):
     __tablename__ = 'lowlink'
 
-    id = Column(INT, primary_key=True, index=True)
-    productID = Column(INT, nullable=False)
+    productId = Column(BigInteger, primary_key=True,nullable=False)

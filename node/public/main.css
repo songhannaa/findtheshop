@@ -87,6 +87,63 @@ nav{
     margin-bottom: 20px;
 }
 
+/*  최저가 버튼 */
+.Btn {
+    list-style-type: none;
+    padding: 0;
+    float: right;
+    margin-right: 20px;
+}
+
+.Btn .btn,
+.Btn .lowbtn {
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 15px;
+}
+
+.btn {
+    border: 1px solid #ddd; 
+}
+
+.lowbtn {
+   border: 1px solid #ddd; 
+}
+
+.btn-click{
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 15px;
+    background-color:  #4aa1fe;
+    color: #fff;
+    border: 1px solid #ddd;
+}
+
+.lowbtn-click{
+    display: inline-block;
+    margin-right: 10px;
+    padding: 5px 10px;
+    text-decoration: none;
+    border-radius: 15px;
+    background-color:  #8E99FF;
+    color: #fff;
+    border: 1px solid #ddd;
+}
+
+/* 버튼 hover 효과 */
+.Btn .btn:hover{
+    background-color:  #4aa1fe;
+    color: #fff;
+}
+.Btn .lowbtn:hover {
+    background-color:  #8E99FF;
+    color: #fff;
+}
+
 .item-list {
     width:100%;
     list-style: none;
@@ -146,7 +203,7 @@ nav{
 /* 상품 상세  페이지 */
 .iteminfo{
     display: flex;
-    margin: 50px 0 100px 0;
+    margin: 50px 0 50px 0;
     
 }
 .img{
@@ -166,12 +223,12 @@ nav{
 }
 
 .info h3{
-    font-size: 30px;
+    font-size: 35px;
     margin-bottom: 80px;
 }
 
 .info p{
-    font-size: 25px;
+    font-size: 20px;
     margin-bottom: 20px;
 }
 
@@ -197,4 +254,16 @@ nav{
 
 .info .delivery{
     color: #777;
+}
+
+.info .shop:hover{
+    color: rgb(255, 151, 113);
+}
+
+/* 상품 리뷰 */
+.review-list{
+    padding: 15px 20px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-bottom: 50px;
 }

@@ -15,17 +15,8 @@ session = db.sessionmaker()
 # jsonserver url
 base_url = 'http://192.168.1.72:5000/items'
 
-@app.get(
-        path='/itemlist', description="jsonserver item 리스트",
-        status_code=status.HTTP_200_OK,
-        responses={200:{"description" : "jsonserver 응답"}}
-)
-async def getItemList():
-    reponse = requests.get(base_url)
-    return reponse.json()
-
 # 네이버 openapi로 item query 입력받아서 jsonserver에 업로드 후, 출력
-@app.post(
+@app.get(
         path='/additemlist', description="검색 후 , jsonserver item 리스트 업로드",
         status_code=status.HTTP_200_OK,
         responses={200:{"description" : "jsonserver 응답"}}
@@ -39,20 +30,44 @@ async def addItemList(query: Optional[str] = None):
     reponse = requests.get(base_url)
     return reponse.json()
 
+# json server 에 올라간 리스트 불러오기 (기본값)
+@app.get(
+        path='/itemlist', description="jsonserver item 리스트",
+        status_code=status.HTTP_200_OK,
+        responses={200:{"description" : "jsonserver 응답"}}
+)
+async def getItemList():
+    response = requests.get(base_url)
+    data = response.json()
+    return data
+
+# json server 에 올라간 리스트 불러오기 (최저가로)
+@app.get(
+        path='/sortitemlist', description="jsonserver item 리스트",
+        status_code=status.HTTP_200_OK,
+        responses={200:{"description" : "jsonserver 응답"}}
+)
+async def getItemList():
+    response = requests.get(base_url)
+    data = response.json()
+    sorted_data = sorted(data, key=lambda x: int(x['lprice']))
+    return sorted_data
+
+
 # item 선택해서 mysql 저장 (중복 확인하고 존재하면 mysql 에서 꺼내오기 )
 @app.post(
-        path='/additem/{productId}', description="jsonserver item 선택해서 mysql 저장",
-        status_code=status.HTTP_200_OK,
-        responses={200:{"description" : "mysql 저장 완료"}}
+    path='/additem/{productId}', description="jsonserver item 선택해서 mysql 저장",
+    status_code=status.HTTP_200_OK,
+    responses={200:{"description" : "mysql 저장 완료"}}
 )
 async def addItem(productId: Optional[str] = None):
     if productId is None:
         return "productId를 입력하세요."
     else:
-        # 받아온 productId 로 중복값 먼저 확인해보고 , 없으면 저장함
+        # 받아온 productId 로 중복값 먼저 확인
         checkId = session.query(Item).filter(Item.productId == productId).first()
         # 만약 mysql에 없으면 새로 저장
-        if checkId is None :   
+        if checkId is None:
             url = base_url + '?' + 'productId=' + productId
             response = requests.get(url)
             product_data = response.json()  
@@ -63,13 +78,20 @@ async def addItem(productId: Optional[str] = None):
                 'lprice': product_data[0]['lprice'],
                 'productId': product_data[0]['productId']
             }
-            item = Item(productId=selected_data['productId'],title=selected_data['title'],link=selected_data['link'],image=selected_data['image'],lprice=selected_data['lprice'])
+            # item table 저장
+            item = Item(productId=selected_data['productId'], title=selected_data['title'], link=selected_data['link'], image=selected_data['image'], lprice=selected_data['lprice'])
             session.add(item)
             session.commit()
-            result = session.query(Item).filter(Item.productId == productId).first()
-            return {"item": result}
+            # #lowlink table 저장
+            link = Lowlink(productId=selected_data['productId'])
+            session.add(link)
+            session.commit()
+            # mysql table 해당 값 조회
+            itemresult = session.query(Item).filter(Item.productId == productId).first()
+            return {"item": itemresult}
         else:
-            return {"item": checkId }
+            return {"item": checkId}
+        
     
 # 담은 item table 전체 조회 (최근 본 상품)
 @app.get(
@@ -104,8 +126,11 @@ async def deleteItem(productId: Optional[str] = None):
     if productId is None:
         return "productId를 입력해주세요"
     else:
-        # mysql delete
+        # mysql - item table delete
         session.query(Item).filter(Item.productId == productId).delete()
+        session.commit()
+        # mysql - lowlink table delete
+        session.query(Lowlink).filter(Lowlink.productId == productId).delete()
         session.commit()
         # mongodb delete
         mycol.delete_one({"productId":productId})
@@ -115,29 +140,30 @@ async def deleteItem(productId: Optional[str] = None):
 
 # 상품 선택했을 때, 크롤링 한 정보를 몽고에 저장 (중복 확인하고 존재하면 몽고 에서 꺼내오기 )
 @app.post(
-    path='/addlowlink/{productId}',description="상품 최저가 정보 mongoDB에 저장",
+    path='/addlowlink/{productId}',
+    description="상품 최저가 정보 mongoDB에 저장",
     status_code=status.HTTP_200_OK,
     responses={200:{"description" : "mongoDB 저장 완료"}}
 )
 async def addLowLink(productId: Optional[str] = None):
-    # 몽고에 존재하는지 확인
-    checkId = list(mycol.find({"productId":productId}, {"_id":0}))
-    # 만약 몽고에 존재하지 않으면 새로 저장
-    if not checkId:
-        # mysql에 productId만 insert (나중에 select, drop을 위해)
-        item = Lowlink(productID=productId)
-        session.add(item)
-        session.commit()
-        # mongo 에 새로운 데이터 저장 
-        url=f"https://search.shopping.naver.com/catalog/{productId}?&section=price"
-        lowitem = get_lowest_price(url, productId)
-        mycol.insert_many(lowitem)
-        result = list(mycol.find({"productId":productId}, {"_id":0}))
-        return {"lowlinklist":result}
-    # 존재하면 저장 했던 값 출력하기
+    if productId is None:
+        return "productId를 입력하세요."
     else:
-        return {"lowlinklist":checkId}
+        # MongoDB에서 해당 제품의 정보 조회
+        existing_item = list(mycol.find({"productId":productId}, {"_id":0}))
+        # MongoDB에 해당 제품의 정보가 없으면 새로운 데이터 저장
+        if not existing_item:
+            url = f"https://search.shopping.naver.com/catalog/{productId}?&section=price"
+            lowitem = get_lowest_price(url, productId)
+            mycol.insert_many(lowitem)
+            time.sleep(3)
+            result = list(mycol.find({"productId": productId}, {"_id": 0}))
+            return {"lowlinklist": result}
+        # MongoDB에 해당 제품의 정보가 있으면 저장된 정보 반환
+        else:
+            return {"lowlinklist": existing_item}
 
+# 몽고 디비 전체 조회 (확인용)
 @app.get(
     path='/getlowlink/{productId}',description="상품 최저가 정보 mongoDB 조회",
     status_code=status.HTTP_200_OK,
