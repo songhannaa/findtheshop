@@ -133,7 +133,7 @@ async def deleteItem(productId: Optional[str] = None):
         session.query(Lowlink).filter(Lowlink.productId == productId).delete()
         session.commit()
         # mongodb delete
-        mycol.delete_one({"productId":productId})
+        mycol.delete_many({"productId":productId})
 
         result = session.query(Item).all()
         return {"item":result}

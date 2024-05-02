@@ -143,6 +143,7 @@ app.get('/itemlist', async (req, res) => {
                             <link rel="stylesheet" href="/reset.css">
                         </head>
                         <body>
+                        <button onclick="topFunction()" id="topBtn" title="Go to top">TOP</button>
                         <div id="wrap">
                             <nav>
                                 <div class="logo"><a href="/">#FINDTHESHOP</a></div>
@@ -182,6 +183,23 @@ app.get('/itemlist', async (req, res) => {
                                     function sortByDefault() {
                                         window.location.reload();
                                     }
+                                    // 페이지가 일정 이상 스크롤되면 버튼을 보여주기 위해 window 스크롤 이벤트를 사용합니다.
+                                    window.onscroll = function() {scrollFunction()};
+
+                                    function scrollFunction() {
+                                    // 스크롤이 20px 이상 되었을 때 버튼을 보여줍니다.
+                                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                                        document.getElementById("topBtn").style.display = "block";
+                                    } else {
+                                        document.getElementById("topBtn").style.display = "none";
+                                    }
+                                    }
+
+                                    // TOP 버튼을 클릭했을 때 페이지의 맨 위로 이동합니다.
+                                    function topFunction() {
+                                    document.body.scrollTop = 0; // Safari
+                                    document.documentElement.scrollTop = 0; // Chrome, Firefox, IE 및 Opera
+                                    }
 
                     `;
                     output += `
@@ -211,6 +229,7 @@ app.get('/deitemlist', async (req, res) => { // req 매개변수 추가
                             <link rel="stylesheet" href="/reset.css">
                         </head>
                         <body>
+                        <button onclick="topFunction()" id="topBtn" title="Go to top">TOP</button>
                         <div id="wrap">
                             <nav>
                                 <div class="logo"><a href="/">#FINDTHESHOP</a></div>
@@ -250,7 +269,23 @@ app.get('/deitemlist', async (req, res) => { // req 매개변수 추가
                                     function sortByDefault() {
                                         window.location.reload();
                                     }
+                                    // 페이지가 일정 이상 스크롤되면 버튼을 보여주기 위해 window 스크롤 이벤트를 사용합니다.
+                                    window.onscroll = function() {scrollFunction()};
 
+                                    function scrollFunction() {
+                                    // 스크롤이 20px 이상 되었을 때 버튼을 보여줍니다.
+                                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                                        document.getElementById("topBtn").style.display = "block";
+                                    } else {
+                                        document.getElementById("topBtn").style.display = "none";
+                                    }
+                                    }
+
+                                    // TOP 버튼을 클릭했을 때 페이지의 맨 위로 이동합니다.
+                                    function topFunction() {
+                                    document.body.scrollTop = 0; // Safari
+                                    document.documentElement.scrollTop = 0; // Chrome, Firefox, IE 및 Opera
+                                    }
                     `;
                     output += `
                                 </script>
@@ -279,6 +314,7 @@ app.get('/sortitemlist', async (req, res) => { // req 매개변수 추가
                             <link rel="stylesheet" href="/reset.css">
                         </head>
                         <body>
+                        <button onclick="topFunction()" id="topBtn" title="Go to top">TOP</button>
                         <div id="wrap">
                             <nav>
                                 <div class="logo"><a href="/">#FINDTHESHOP</a></div>
@@ -317,6 +353,23 @@ app.get('/sortitemlist', async (req, res) => { // req 매개변수 추가
                     output += `
                                     function sortByDefault() {
                                         window.location.reload();
+                                    }
+                                    // 페이지가 일정 이상 스크롤되면 버튼을 보여주기 위해 window 스크롤 이벤트를 사용합니다.
+                                    window.onscroll = function() {scrollFunction()};
+
+                                    function scrollFunction() {
+                                    // 스크롤이 20px 이상 되었을 때 버튼을 보여줍니다.
+                                    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                                        document.getElementById("topBtn").style.display = "block";
+                                    } else {
+                                        document.getElementById("topBtn").style.display = "none";
+                                    }
+                                    }
+
+                                    // TOP 버튼을 클릭했을 때 페이지의 맨 위로 이동합니다.
+                                    function topFunction() {
+                                    document.body.scrollTop = 0; // Safari
+                                    document.documentElement.scrollTop = 0; // Chrome, Firefox, IE 및 Opera
                                     }
 
                     `;
@@ -368,6 +421,7 @@ app.get('/iteminfo', async (req, res) => {
                 <link rel="stylesheet" href="/reset.css">
             </head>
             <body>
+            <button onclick="topFunction()" id="topBtn" title="Go to top">TOP</button>
                 <div id="wrap">
                     <nav>
                         <div class="logo"><a href="/">#FINDTHESHOP</a></div>
@@ -413,6 +467,25 @@ app.get('/iteminfo', async (req, res) => {
                 <iframe class="iframe-preview center" width="100%" height="2500px" style="border: none;" src="/reviews?productId=${itemList.productId}" frameborder='0' scrolling="no"></iframe>
                 </div>
             </body>
+            <script>
+                // 페이지가 일정 이상 스크롤되면 버튼을 보여주기 위해 window 스크롤 이벤트를 사용합니다.
+                window.onscroll = function() {scrollFunction()};
+
+                function scrollFunction() {
+                // 스크롤이 20px 이상 되었을 때 버튼을 보여줍니다.
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    document.getElementById("topBtn").style.display = "block";
+                } else {
+                    document.getElementById("topBtn").style.display = "none";
+                }
+                }
+
+                // TOP 버튼을 클릭했을 때 페이지의 맨 위로 이동합니다.
+                function topFunction() {
+                document.body.scrollTop = 0; // Safari
+                document.documentElement.scrollTop = 0; // Chrome, Firefox, IE 및 Opera
+                }
+            </script>
             </html>
         `;
         
