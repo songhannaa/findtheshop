@@ -1,10 +1,15 @@
+###
+# 기능설명 : mysql, mongoDB연결
+# 작성자명 : 송한나
+# 작성일자 : 2024.05.01
+###
 from sqlalchemy import *
 from sqlalchemy.orm import sessionmaker
 from pymongo import mongo_client
 import os.path
 import json
 
-# SECREAT.JSON
+# SECREAT.JSON 연결
 BASE_DIR = os.path.dirname(os.path.relpath("./"))
 secret_file = os.path.join(BASE_DIR, 'secret.json')
 with open(secret_file) as f:

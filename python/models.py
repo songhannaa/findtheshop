@@ -1,3 +1,8 @@
+###
+# 기능설명 : mysql model 설정
+# 작성자명 : 송한나 
+# 작성일자 : 2024.05.01
+###
 from sqlalchemy import Column, TEXT, INT, BigInteger
 from sqlalchemy.ext.declarative import declarative_base
 

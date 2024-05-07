@@ -1,3 +1,9 @@
+###
+# 기능설명 : CRUD를 위한 api 생성
+# 작성자명 : 송한나 
+# 작성일자 : 2024.05.01
+###
+
 from fastapi import FastAPI, status
 from typing import Optional
 from database import *
@@ -12,18 +18,20 @@ app = FastAPI()
 db = Mysql_conn()
 session = db.sessionmaker()
 
-# jsonserver url
+# jsonserver base_url 설정
 base_url = 'http://192.168.1.72:5000/items'
 
-# 네이버 openapi로 item query 입력받아서 jsonserver에 업로드 후, 출력
+# 네이버 openAPI로 검색할 상품의 query 입력받아서 jsonserver에 json파일 업로드 후, 출력
 @app.get(
         path='/additemlist', description="검색 후 , jsonserver item 리스트 업로드",
         status_code=status.HTTP_200_OK,
         responses={200:{"description" : "jsonserver 응답"}}
 )
 async def addItemList(query: Optional[str] = None):
+    # client 정보는 get_secret 사용
     client_id = get_secret("client_id")
     client_secret = get_secret("client_secret")
+    # get_search_item 함수를 import하여 json파일 생성
     get_search_item(client_id, client_secret, query)
     # jsonserver 재로딩 떄문에 sleep 추가함
     time.sleep(1)
@@ -41,7 +49,7 @@ async def getItemList():
     data = response.json()
     return data
 
-# json server 에 올라간 리스트 불러오기 (최저가로)
+# json server 에 올라간 리스트 불러오기 (최저가)
 @app.get(
         path='/sortitemlist', description="jsonserver item 리스트",
         status_code=status.HTTP_200_OK,
@@ -50,11 +58,12 @@ async def getItemList():
 async def getItemList():
     response = requests.get(base_url)
     data = response.json()
+    # 함수를 사용하여 lprice 최저가순 정렬
     sorted_data = sorted(data, key=lambda x: int(x['lprice']))
     return sorted_data
 
 
-# item 선택해서 mysql 저장 (중복 확인하고 존재하면 mysql 에서 꺼내오기 )
+# productId값 입력 받아서 해당 productId와 동일한 값을 mysql 저장 (중복 값 확인하고, 존재하면 mysql 에서 꺼내오기 )
 @app.post(
     path='/additem/{productId}', description="jsonserver item 선택해서 mysql 저장",
     status_code=status.HTTP_200_OK,

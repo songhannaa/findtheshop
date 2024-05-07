@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const XMLHttpRequest = require("xhr2");
 
 const app = express()
 
@@ -9,13 +8,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// 메인 화면에 최근 본 상품 4개 
+// 메인 화면 - 최근 본 상품 
 app.get('/view', async (req, res) => {
     try {
         const response = await fetch('http://192.168.1.72:3000/getitems');
         const data = await response.json();
         const recentItems = data.item
 
+        // 메인 화면에 최신 순 4개 출력을 위한 sort 사용
         const sortedItems = recentItems.sort((a, b) => b.id - a.id).slice(0, 4);
         let output = '<link rel="stylesheet" href="/main.css"><link rel="stylesheet" href="/reset.css">';
         output += `
@@ -44,8 +44,8 @@ app.get('/view', async (req, res) => {
     }
 });
 
-// 최근 본 상품 전체 목록
-app.get('/views', async (req, res) => { // req 매개변수 추가
+// 최근 본 상품 전체 목록 페이지
+app.get('/views', async (req, res) => { 
     try {
         const response = await fetch('http://192.168.1.72:3000/getitems');
         const data = await response.json();
@@ -91,11 +91,12 @@ app.get('/views', async (req, res) => { // req 매개변수 추가
                 </ul>
                 </div>
                 <script>
-                // 삭제 버튼 클릭 시 처리
+                // 삭제 버튼 클릭 시 - 상품 삭제 후, reload
                 document.querySelectorAll('.delete-btn').forEach(btn => {
                     btn.addEventListener('click', async () => {
                         const productId = btn.dataset.productId;
                         const confirmation = confirm('해당 상품을 삭제하시겠습니까?');
+                        // 화면 reload
                         window.location.reload();
                         if (confirmation) {
                             try {
@@ -121,7 +122,7 @@ app.get('/views', async (req, res) => { // req 매개변수 추가
     }
 });
 
-// 검색 후 , 쿼리 받아서 리스트 띄우기 (처음 검색 시 쿼리 받아서 출력)
+// 검색 후 , 쿼리 받아서 리스트 띄우기 (처음 검색 시 - 쿼리 받아서 출력해야해서 페이지 따로 생성함)
 app.get('/itemlist', async (req, res) => {
     try {
         const encodedQuery = encodeURIComponent(req.query.query);
@@ -183,11 +184,11 @@ app.get('/itemlist', async (req, res) => {
                                     function sortByDefault() {
                                         window.location.reload();
                                     }
-                                    // 페이지가 일정 이상 스크롤되면 버튼을 보여주기 위해 window 스크롤 이벤트를 사용합니다.
+                                    // window 스크롤 이벤트 사용
                                     window.onscroll = function() {scrollFunction()};
 
                                     function scrollFunction() {
-                                    // 스크롤이 20px 이상 되었을 때 버튼을 보여줍니다.
+                                    // 스크롤이 20px 이상 내려갔을 때 top 버튼 생성
                                     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                                         document.getElementById("topBtn").style.display = "block";
                                     } else {
@@ -195,7 +196,7 @@ app.get('/itemlist', async (req, res) => {
                                     }
                                     }
 
-                                    // TOP 버튼을 클릭했을 때 페이지의 맨 위로 이동합니다.
+                                    // TOP 버튼을 클릭시 페이지의 맨 위로 이동
                                     function topFunction() {
                                     document.body.scrollTop = 0; // Safari
                                     document.documentElement.scrollTop = 0; // Chrome, Firefox, IE 및 Opera
@@ -214,7 +215,7 @@ app.get('/itemlist', async (req, res) => {
     }
 });
 
-// 검색 후 , 쿼리 받아서 리스트 띄우기 (기본 순)
+// 최저가 순 에서 기본 순으로 이동 시, query 가 없으므로 다시 itemlist 출력하는 페이지 생성
 app.get('/deitemlist', async (req, res) => { // req 매개변수 추가
     try {
         const response = await fetch('http://192.168.1.72:3000/itemlist');
@@ -269,11 +270,11 @@ app.get('/deitemlist', async (req, res) => { // req 매개변수 추가
                                     function sortByDefault() {
                                         window.location.reload();
                                     }
-                                    // 페이지가 일정 이상 스크롤되면 버튼을 보여주기 위해 window 스크롤 이벤트를 사용합니다.
+                                    // window 스크롤 이벤트 사용
                                     window.onscroll = function() {scrollFunction()};
 
                                     function scrollFunction() {
-                                    // 스크롤이 20px 이상 되었을 때 버튼을 보여줍니다.
+                                    // 스크롤이 20px 이상 내려갔을 때 top 버튼 생성
                                     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                                         document.getElementById("topBtn").style.display = "block";
                                     } else {
@@ -281,7 +282,7 @@ app.get('/deitemlist', async (req, res) => { // req 매개변수 추가
                                     }
                                     }
 
-                                    // TOP 버튼을 클릭했을 때 페이지의 맨 위로 이동합니다.
+                                    // TOP 버튼을 클릭시 페이지의 맨 위로 이동
                                     function topFunction() {
                                     document.body.scrollTop = 0; // Safari
                                     document.documentElement.scrollTop = 0; // Chrome, Firefox, IE 및 Opera
@@ -299,7 +300,7 @@ app.get('/deitemlist', async (req, res) => { // req 매개변수 추가
     }
 });
 
-// 검색 후 , 쿼리 받아서 리스트 띄우기 (최저가 순)
+// 전체 리스트를 최저가 순으로 출력
 app.get('/sortitemlist', async (req, res) => { // req 매개변수 추가
     try {
         const response = await fetch('http://192.168.1.72:3000/sortitemlist');
@@ -334,7 +335,7 @@ app.get('/sortitemlist', async (req, res) => { // req 매개변수 추가
                         <div id="wrap">
                         <ul class="item-list">
                     `;
-       data.forEach((item) => { // response -> data로 수정
+       data.forEach((item) => { 
                         output += `
                             <li class="item">
                                 <a href="/iteminfo?productId=${item.productId}" target="_self">
@@ -354,11 +355,11 @@ app.get('/sortitemlist', async (req, res) => { // req 매개변수 추가
                                     function sortByDefault() {
                                         window.location.reload();
                                     }
-                                    // 페이지가 일정 이상 스크롤되면 버튼을 보여주기 위해 window 스크롤 이벤트를 사용합니다.
+                                    // window 스크롤 이벤트 사용
                                     window.onscroll = function() {scrollFunction()};
 
                                     function scrollFunction() {
-                                    // 스크롤이 20px 이상 되었을 때 버튼을 보여줍니다.
+                                    // 스크롤이 20px 이상 내려갔을 때 top 버튼 생성
                                     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                                         document.getElementById("topBtn").style.display = "block";
                                     } else {
@@ -366,7 +367,7 @@ app.get('/sortitemlist', async (req, res) => { // req 매개변수 추가
                                     }
                                     }
 
-                                    // TOP 버튼을 클릭했을 때 페이지의 맨 위로 이동합니다.
+                                    // TOP 버튼을 클릭시 페이지의 맨 위로 이동
                                     function topFunction() {
                                     document.body.scrollTop = 0; // Safari
                                     document.documentElement.scrollTop = 0; // Chrome, Firefox, IE 및 Opera
@@ -468,11 +469,11 @@ app.get('/iteminfo', async (req, res) => {
                 </div>
             </body>
             <script>
-                // 페이지가 일정 이상 스크롤되면 버튼을 보여주기 위해 window 스크롤 이벤트를 사용합니다.
+                // window 스크롤 이벤트 사용
                 window.onscroll = function() {scrollFunction()};
 
                 function scrollFunction() {
-                // 스크롤이 20px 이상 되었을 때 버튼을 보여줍니다.
+                // 스크롤이 20px 이상 내려갔을 때 top 버튼 생성
                 if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                     document.getElementById("topBtn").style.display = "block";
                 } else {
@@ -480,7 +481,7 @@ app.get('/iteminfo', async (req, res) => {
                 }
                 }
 
-                // TOP 버튼을 클릭했을 때 페이지의 맨 위로 이동합니다.
+                // TOP 버튼을 클릭시 페이지의 맨 위로 이동
                 function topFunction() {
                 document.body.scrollTop = 0; // Safari
                 document.documentElement.scrollTop = 0; // Chrome, Firefox, IE 및 Opera
@@ -496,7 +497,7 @@ app.get('/iteminfo', async (req, res) => {
     }
 });
 
-// 리뷰
+// 리뷰 출력 - 다은 api 사용해서 iframe 안에 출력
 app.get('/reviews', async (req, res) => {
     try {
         const productId = req.query.productId;
