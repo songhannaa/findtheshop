@@ -97,9 +97,9 @@ async def addItem(productId: Optional[str] = None):
             session.commit()
             # mysql table 해당 값 조회
             itemresult = session.query(Item).filter(Item.productId == productId).first()
-            return {"item": itemresult}
+            return {"result code": 200, "item": itemresult}
         else:
-            return {"item": checkId}
+            return {"result code": 200, "item": checkId}
         
     
 # 담은 item table 전체 조회 (최근 본 상품)
@@ -110,7 +110,7 @@ async def addItem(productId: Optional[str] = None):
 )
 async def getItems():
     result = session.query(Item).all()
-    return {"item":result}
+    return {"result code": 200,"item":result}
 
 # 담은 item table 중 선택해서 출력 (확인용)
 @app.get(
@@ -123,7 +123,7 @@ async def getItem(productId: Optional[str] = None):
         return "productId를 입력하세요."
     else:
         result = session.query(Item).filter(Item.productId == productId).first()
-        return {"item":result}
+        return {"result code": 200,"item":result}
 
 # 최근 본 상품에서 삭제 했을 때, productId값으로 mysql, mongodb에서 삭제
 @app.post(
@@ -145,7 +145,7 @@ async def deleteItem(productId: Optional[str] = None):
         mycol.delete_many({"productId":productId})
 
         result = session.query(Item).all()
-        return {"item":result}
+        return {"result code": 200,"item":result}
 
 # 상품 선택했을 때, 크롤링 한 정보를 몽고에 저장 (중복 확인하고 존재하면 몽고 에서 꺼내오기 )
 @app.post(
@@ -167,10 +167,10 @@ async def addLowLink(productId: Optional[str] = None):
             mycol.insert_many(lowitem)
             time.sleep(3)
             result = list(mycol.find({"productId": productId}, {"_id": 0}))
-            return {"lowlinklist": result}
+            return {"result code": 200,"lowlinklist": result}
         # MongoDB에 해당 제품의 정보가 있으면 저장된 정보 반환
         else:
-            return {"lowlinklist": existing_item}
+            return {"result code": 200,"lowlinklist": existing_item}
 
 # 몽고 디비 전체 조회 (확인용)
 @app.get(
@@ -180,6 +180,6 @@ async def addLowLink(productId: Optional[str] = None):
 )
 async def getLowlink(productId: Optional[str] = None):
     result = list(mycol.find({"productId":productId}, {"_id":0}))
-    return {"lowlinklist":result}
+    return {"result code": 200,"lowlinklist":result}
 
 
