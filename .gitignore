@@ -1,0 +1,13 @@
+# created by virtualenv automatically
+.venv
+*.xml
+*.iml
+
+# json 
+package-lock.json
+secret.json
+items.json
+
+/**/__pycache__/
+/node_modules/
+/**/node_modules/
