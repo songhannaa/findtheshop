@@ -53,7 +53,7 @@
 <br>
 
 
-## <span id="technology-stack">4. ⛏️기술 스택 및 이유</span>
+## <span id="technology-stack">4. ⛏️기술 스택 </span>
 
 ### 기술 스택
 
@@ -100,67 +100,15 @@
 
 <br>
 
-## <span id="function-and-structure">5. 🔍기능 및 구조</span>
+## <span id="function-and-structure">5. 🔍프로젝트 기능</span>
 
 ### 기능
 
 
 <br>
 
-### 📁폴더 구조
+### 📁프로젝트 주요 기능
 
-- src/api/ : API을 이용하기 위한 hook
-- src/assets/ : 전역에서 사용하는 이미지, 폰트
-- src/components/ : 공통 컴포넌트
-- src/pages/: 서비스에 사용되는 각 페이지
-- src/routes/: 페이지 라우팅
-- src/recoil/: 전역에서 사용되는 Reocil
-- src/utils/: API 외 사용될 기능
-
-📦final-19-Talkhoogam<br>
-┣ 📂public<br>
-┃ ┣ 📜index.html<br>
-┃ ┗ 📜Logo.ico<br>
-┣ 📂src<br>
-┃ ┣ 📂api<br>
-┃ ┃ ┣ 📂comment<br>
-┃ ┃ ┣ 📂post<br>
-┃ ┃ ┣ 📂product<br>
-┃ ┃ ┣ 📂profile<br>
-┃ ┃ ┗ 📂upload<br>
-┃ ┣ 📂assets<br>
-┃ ┃ ┣ 📂chat<br>
-┃ ┃ ┣ 📂fonts<br>
-┃ ┃ ┃ ┗ 📂pretendard<br>
-┃ ┃ ┣ 📂icons<br>
-┃ ┃ ┗ 📂images<br>
-┃ ┣ 📂components<br>
-┃ ┃ ┣ 📂comment<br>
-┃ ┃ ┣ 📂common<br>
-┃ ┃ ┃ ┣ 📂button<br>
-┃ ┃ ┃ ┗ 📂input<br>
-┃ ┃ ┣ 📂empty<br>
-┃ ┃ ┣ 📂footer<br>
-┃ ┃ ┣ 📂Gathering<br>
-┃ ┃ ┣ 📂header<br>
-┃ ┃ ┣ 📂modal<br>
-┃ ┃ ┗ 📂profile<br>
-┃ ┣ 📂pages<br>
-┃ ┃ ┣ 📂chat<br>
-┃ ┃ ┣ 📂post<br>
-┃ ┃ ┣ 📂product<br>
-┃ ┃ ┗ 📂profile<br>
-┃ ┣ 📂recoil<br>
-┃ ┣ 📂router<br>
-┃ ┣ 📂styles<br>
-┃ ┣ 📂utils<br>
-┃ ┣ 📜App.js<br>
-┃ ┗ 📜index.js<br>
-┣ 📜.gitignore<br>
-┣ 📜.prettierrc<br>
-┣ 📜package-lock.json<br>
-┣ 📜package.json<br>
-┗ 📜README.md<br>
 
 <br>
 
@@ -170,21 +118,40 @@
 
 ---
 
-- 월/목 오전 9시 반 회의(회고 및 작업 계획)
-- 실시간 쉐어 프로그래밍을 통한 문제 해결
-- 개발 중에는 프로젝트 디스코드 채널에 접속하여 진행
+- 매주 수요일 회의(회고 및 작업 계획)
 
+**변수/함수명에 대한 Naming Convention**
+
+- 변수, 함수, 인스턴스 :
+camelCase
+- 함수명 작성 : 
+동사 + 명사 형태 ex ) getItems
+- Class, Constructor : 
+PascalCase
+- Naming의 글자 길이 제한 : 20자 이내 / 20자 이상일 경우 팀원과 상의하기
+- Flag로 사용되는 변수 :
+Boolean의 경우 조동사 + Flag변수 ex ) isNew, isNum …
+- 약칭의 사용 :
+약칭 사용을 지양하고 만약 사용할 경우 팀원과 상의하기
 <br>
 
-### notion
+**주석 규칙**
 
-
-[*노션 링크*]
-
+- #(띄우기)내용으로 쓰기
+- 여러 줄 주석일 경우도 #로 통일, 대신 
+###
+# 내용
+###
+으로 여러줄 주석 표시해주기
+- **코드 첫머리에
+###
+# 기능설명(간단히) : 
+# 작성자명 : 
+# 작성일자 : 
+###
+적어주기**
 
 ---
-
-
 
 
 <br>
