@@ -28,6 +28,8 @@
 - 주어진 개발 기간 내에 기본적인 CRUD를 구현하기 위해 노력했습니다.
 - fastAPI에서 데이터 처리를 담당하고 nodejs로 백엔드 서버를 처리하게 하여 **분산처리 시스템**을 구현하였습니다.
 
+![Group 2](https://github.com/songhannaa/findtheshop/blob/62c459f58b9b5213d1c640274164f2f1b0b26dcf/ppt/003.jpg)
+
 <br>
 
 ## <span id="team">2. 👨‍👩‍👧‍👦팀 소개 및 역할</span>
