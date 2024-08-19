@@ -35,17 +35,13 @@
 ## <span id="team">2. 👨‍👩‍👧‍👦팀 소개 및 역할</span>
 
 **"농담곰 연구소"** 팀 입니다.<br/>
+
+### 역할 분담
 | **송한나** | **장다은** | 
 | :---------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | 
 | <img width="360" alt="한나" src="https://avatars.githubusercontent.com/u/131218435?v=4"> | <img width="360"  alt="다은" src="https://avatars.githubusercontent.com/u/128432201?v=4"> | 
 | [songhannaa](https://github.com/songhannaa) | [absolutelydawn](https://github.com/absolutelydawn) | 
-| <img src="https://img.shields.io/badge/Team Leader-7569db"/><br> - 프로젝트 기획/개발 <br> - 백엔드 / 프론트엔드 총괄 <br> - 상품 정보 데이터 관리| <img src="https://img.shields.io/badge/Team Member-118704"/><br> - 프로젝트 기획/개발 <br> - 백엔드 / 프론트엔드 총괄 <br> - 리뷰 데이터 관리 | 
-
-<br>
-
-### 역할 분담
-
-ppt 2
+| <img src="https://img.shields.io/badge/Team Leader-7569db"/><br> - 프로젝트 기획/개발 <br> - 백엔드 / 프론트엔드 총괄 <br> - 크롤링 및 스크래핑 <br>- 상품 정보 데이터 관리| <img src="https://img.shields.io/badge/Team Member-118704"/><br> - 프로젝트 기획/개발 <br> - 크롤링 및 스크래핑 <br> - 리뷰 데이터 관리 | 
 
 
 <br>
