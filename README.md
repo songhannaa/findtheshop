@@ -48,7 +48,7 @@
 
 ## <span id="period">3. 🗓️개발 일정</span>
 
-[ppt 3](https://github.com/songhannaa/findtheshop/blob/365f75ad4a95dfbca44b91419f32c53107570eec/ppt/005.jpg)
+![Group 2](https://github.com/songhannaa/findtheshop/blob/365f75ad4a95dfbca44b91419f32c53107570eec/ppt/005.jpg)
 
 <br>
 
