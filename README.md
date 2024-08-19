@@ -36,7 +36,7 @@ ppt 이미지 첨부하기
 | **송한나** | **장다은** | 
 | :---------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | 
 | <img width="360" alt="한나" src="https://avatars.githubusercontent.com/u/131218435?v=4"> | <img width="360"  alt="다은" src="https://avatars.githubusercontent.com/u/128432201?v=4"> | 
-| [songhannaa](https://github.com/songhannaa) | [nonelijah](https://github.com/absolutelydawn) | 
+| [songhannaa](https://github.com/songhannaa) | [absolutelydawn](https://github.com/absolutelydawn) | 
 | <img src="https://img.shields.io/badge/Team Leader-7569db"/> | <img src="https://img.shields.io/badge/Team Member-118704"/> | 
 
 <br>
