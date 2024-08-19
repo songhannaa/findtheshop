@@ -48,7 +48,7 @@
 
 ## <span id="period">3. 🗓️개발 일정</span>
 
-ppt 3
+[ppt 3](https://github.com/songhannaa/findtheshop/blob/365f75ad4a95dfbca44b91419f32c53107570eec/ppt/005.jpg)
 
 <br>
 
@@ -61,9 +61,9 @@ ppt 3
 	<tr>
 		<td align="center" width="100px">사용 기술</td>
 		<td width="800px">
-		<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=ffffff"/>&nbsp
-		<img src="https://img.shields.io/badge/React%20Router-CA4245?style=for-the-badge&logo=ReactRouter&logoColor=white"/>&nbsp
-		<img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"/>&nbsp
+		<img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">&nbsp
+		<img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white">&nbsp
+		<img src="https://img.shields.io/badge/fastapi-009688?style=for-the-badge&logo=fastapi&logoColor=white">&nbsp
 		</td>
 	</tr>
 	<tr>
@@ -73,9 +73,10 @@ ppt 3
 		</td>
 	</tr>
 	<tr>
-		<td align="center">포맷터</td>
+		<td align="center">언어</td>
 		<td>
-			<img src="https://img.shields.io/badge/Prettier-373338?style=for-the-badge&logo=Prettier&logoColor=ffffff"/>&nbsp
+		<img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white">&nbsp
+		<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
 		</td>
 	</tr>
 	<tr>
@@ -83,7 +84,6 @@ ppt 3
 		<td>
 			<img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white"/>&nbsp
 			<img src="https://img.shields.io/badge/Notion-5a5d69?style=for-the-badge&logo=Notion&logoColor=white"/>&nbsp
-			<img src="https://img.shields.io/badge/Discord-4263f5?style=for-the-badge&logo=Discord&logoColor=white"/>&nbsp
 		</td>
 	<tr> 
 		<td align="center">디자인</td>
@@ -97,17 +97,6 @@ ppt 3
 		<img src="https://img.shields.io/badge/VSCode-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white"/>&nbsp
 	</tr>
 </table>
-
-### 사용 이유
-
-- **React**
-  - 가상 DOM을 사용함으로써 빠른 렌더링 속도를 보장하고 컴포넌트 단위로 모듈화 하여 코드 관리하기 용이 합니다. 또한 SPA 개발을 하며 사용자 경험을 위해 사용 했습니다.
-- **Recoil**
-  - 전역에서 데이터를 관리하므로 컴포넌트 간 데이터 전달을 간단하게 만들어 주어 복잡한 상태 관리 문제를 해결 하기 위해 사용했습니다.
-- **React Router**
-  - SPA에서 페이지 이동을 관리하고 사용자의 편의성을 높이기 위해 사용했습니다.
-- **Styled-Components**
-  - JavaScript 내에서 CSS 스타일을 작성할 수 있게 해줌으로써 컴포넌트 단위의 스타일링이 가능해져 코드의 재사용 성과 가독성을 높이며, 동적인 스타일링도 쉽게 할 수 있기에 사용했습니다.
 
 <br>
 
