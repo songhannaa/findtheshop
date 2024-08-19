@@ -35,8 +35,8 @@ ppt 이미지 첨부하기
 **"농담곰 연구소"** 팀 입니다.<br/>
 | **송한나** | **장다은** | 
 | :---------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------: | 
-| <img width="360" alt="한나" src=""> | <img width="360"  alt="다은" src=""> | 
-| [ChangHoChoi92](https://github.com/ChangHoChoi92) | [nonelijah](https://github.com/nonelijah) | 
+| <img width="360" alt="한나" src="https://avatars.githubusercontent.com/u/131218435?v=4"> | <img width="360"  alt="다은" src="https://avatars.githubusercontent.com/u/128432201?v=4"> | 
+| [songhannaa](https://github.com/songhannaa) | [nonelijah](https://github.com/absolutelydawn) | 
 | <img src="https://img.shields.io/badge/Team Leader-7569db"/> | <img src="https://img.shields.io/badge/Team Member-118704"/> | 
 
 <br>
@@ -232,7 +232,7 @@ ppt 3
 
 ---
 
-![image](https://github.com/FRONTENDSCHOOL7/final-19-Talkhoogam/assets/122965945/1255eb5f-1737-4567-9b08-97e0f1b79488)
+
 
 - commit, PR 등을 실시간으로 알림 받을 수 있도록 디스코드를 사용하였습니다.
 
@@ -261,7 +261,7 @@ ppt 3
 
 - **Pull requests**
 
-![image](https://github.com/FRONTENDSCHOOL7/final-19-Talkhoogam/assets/122965945/2f8a884f-2a08-40f6-a736-2d9fd8568dc1)
+
 
 <br>
 
