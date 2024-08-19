@@ -1,6 +1,6 @@
 # 🛒 파인더샵 | FindTheShop 🛒
 
-https://github.com/songhannaa/findtheshop/blob/139b3e49bb4dc9a47fd40814aba6c8d18e3aca3e/ppt/001.jpg
+![Group 2](https://github.com/songhannaa/findtheshop/blob/139b3e49bb4dc9a47fd40814aba6c8d18e3aca3e/ppt/001.jpg)
 
 <div align="center">
 
