@@ -100,15 +100,30 @@
 
 <br>
 
-## <span id="function-and-structure">5. 🔍프로젝트 기능</span>
+## <span id="function-and-structure">5. 🔍프로젝트 구조 및 기능</span>
 
-### 기능
+### 📁프로젝트 구조
+![Group 2](https://github.com/songhannaa/findtheshop/blob/cf88235544bdfeb41aa24682885ff107884803e4/ppt/008.jpg)
 
-
-<br>
 
 ### 📁프로젝트 주요 기능
 
+1. **메인 페이지** <br>
+    - 사용자가 검색어를 입력하면 검색 페이지로 리디렉션됩니다.<br>
+2. **검색 페이지**:<br>
+    - 검색어가 네이버 API로 전송됩니다.<br>
+    - 네이버 API는 항목 목록(최대 100개)을 반환하고, 이 항목들이 검색 페이지에 표시됩니다.<br>
+3. **제품 선택**:<br>
+    - 사용자가 검색 페이지에서 항목을 클릭하면, 아파치 서버가 **`productId`**를 검색합니다.<br>
+    - 그런 다음 **`productId`**가 Node.js 서비스로 전달되어 FastAPI 서비스에 요청됩니다.<br>
+4. **데이터베이스 조회**:<br>
+    - FastAPI는 MySQL 데이터베이스에서 **`productId`**를 조회합니다.<br>
+    - 찾을 경우, FastAPI는 MongoDB에서 **`productId`**에 대한 리뷰 데이터를 검색하여 Node.js로 반환하고, 이는 다시 아파치 서버로 전달되어 표시됩니다.<br>
+    - 찾지 못할 경우, FastAPI는 **`scraping_reviews.py`**를 트리거하여 리뷰를 수집하고 MongoDB에 저장합니다. 그 후 리뷰 데이터가 검색되어 표시되고, 해당 제품이 "최근 검색 상품" 탭에 추가됩니다.<br>
+5. **최근 검색 탭**:<br>
+    - "최근 검색 상품" 탭의 제품은 메인 페이지에서 접근할 수 있습니다.<br>
+6. **제품 삭제**:<br>
+    - 삭제 작업이 시작되면, **`productId`**가 MySQL에서 삭제되고 관련 리뷰 데이터는 MongoDB에서 제거됩니다.<br>
 
 <br>
 
@@ -166,6 +181,6 @@
 ## <span id="refactoring">7. ♻️리팩토링</span>
 
 - **반응형 웹 개발**<br>
-- **시멘틱 마크업 준수**<br>
+- **React 를 이용한 컴포넌트 관리**<br>
 - **새로운 기능 추가**<br>
-- **팀원 코드 리팩토링**<br>
+- **회원 추가 및 데이터 베이스 확장**<br>
