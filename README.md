@@ -1,6 +1,6 @@
 # 🛒 파인더샵 | FindTheShop 🛒
 
-ppt 이미지 첨부하기
+https://github.com/songhannaa/findtheshop/blob/139b3e49bb4dc9a47fd40814aba6c8d18e3aca3e/ppt/001.jpg
 
 <div align="center">
 
