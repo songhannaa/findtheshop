@@ -122,33 +122,28 @@
 
 **변수/함수명에 대한 Naming Convention**
 
-- 변수, 함수, 인스턴스 :
-camelCase
-- 함수명 작성 : 
-동사 + 명사 형태 ex ) getItems
-- Class, Constructor : 
-PascalCase
+- 변수, 함수, 인스턴스 : camelCase
+- 함수명 작성 : 동사 + 명사 형태 ex ) getItems
+- Class, Constructor : PascalCase
 - Naming의 글자 길이 제한 : 20자 이내 / 20자 이상일 경우 팀원과 상의하기
-- Flag로 사용되는 변수 :
-Boolean의 경우 조동사 + Flag변수 ex ) isNew, isNum …
-- 약칭의 사용 :
-약칭 사용을 지양하고 만약 사용할 경우 팀원과 상의하기
+- Flag로 사용되는 변수 : Boolean의 경우 조동사 + Flag변수 ex ) isNew, isNum …
+- 약칭의 사용 : 약칭 사용을 지양하고 만약 사용할 경우 팀원과 상의하기
 <br>
 
 **주석 규칙**
 
 - #(띄우기)내용으로 쓰기
 - 여러 줄 주석일 경우도 #로 통일, 대신 
-###
+# # #
 # 내용
-###
+# # #
 으로 여러줄 주석 표시해주기
 - **코드 첫머리에
-###
+# # #
 # 기능설명(간단히) : 
 # 작성자명 : 
 # 작성일자 : 
-###
+# # #
 적어주기**
 
 ---
@@ -181,8 +176,6 @@ Boolean의 경우 조동사 + Flag변수 ex ) isNew, isNum …
 
 <br>
 
-
-### Discord
 
 ---
 
